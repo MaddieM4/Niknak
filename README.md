@@ -184,12 +184,12 @@ Product properties TBD.
   <tr>
     <td>Payment properties</td>
     <td>Update payment properties</td>
-    <td>Retry payment if failed</td>
+    <td>Confirm payment</td>
     <td>Cancel payment</td>
   </tr>
 </table>
 
-The properties you can update are very limited - basically just the memo.
+The properties you can update after confirmation are very limited - basically just the memo.
 
 ### $root/specials
 
