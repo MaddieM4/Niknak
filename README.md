@@ -1,6 +1,8 @@
 Niknak
 ======
 
+![Project Logo](http://campadrenalin.github.io/Niknak/images/NiknakLogo180x127.png)
+
 FOSS JSON REST API for digital stores. The ultimate goal is to become the Wordpress of independent online sales.
 
 This repository will include a reference implementation - Python server, client library, and test suite.
