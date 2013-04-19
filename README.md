@@ -76,3 +76,230 @@ If you have questions, you can email them to philip@roaming-initiative.com. You 
     <td><i>No action</i></td>
   </tr>
 </table>
+
+Site metadata is a simple JSON object containing configuration and version information.
+
+### $root/users/
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>User statistics</td>
+    <td><i>No action</i></td>
+    <td>Create new user</td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+User statistics are currently arbitrary, but may be standardized in the future.
+
+User properties TBD.
+
+### $root/users/$uid
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>User properties</td>
+    <td>Update user properties</td>
+    <td><i>No action</i></td>
+    <td>Delete user</td>
+  </tr>
+</table>
+
+User properties TBD.
+
+### $root/products
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>List of products. Uses variables to filter and sort.</td>
+    <td><i>No action</i></td>
+    <td>Create new product.</td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+### $root/products/$product_id
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Product properties</td>
+    <td>Update product properties</td>
+    <td><i>No action</i></td>
+    <td>Delete product</td>
+  </tr>
+</table>
+
+Product properties TBD.
+
+### $root/payments
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Payment statistics</td>
+    <td><i>No action</i></td>
+    <td>Create new payment</td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+### $root/payments/$payment_id
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Payment properties</td>
+    <td>Update payment properties</td>
+    <td>Retry payment if failed</td>
+    <td>Cancel payment</td>
+  </tr>
+</table>
+
+The properties you can update are very limited - basically just the memo.
+
+### $root/specials
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>List all currently available and historical specials</td>
+    <td><i>No action</i></td>
+    <td><i>No action</i></td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+Specials are things like "Buy one get one free." Unlike most things, they are ID'd by name. They are built into the system, and cannot be custom-defined without modifying the Niknak code, but may have any per-product parameters.
+
+### $root/specials/$special_name
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Description of special, and list of products it currently applies to.</td>
+    <td><i>No action</i></td>
+    <td><i>No action</i></td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+### $root/purchases
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Purchase statistics</td>
+    <td><i>No action</i></td>
+    <td>New purchase</td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+A purchase associates a user, a total, a memo, and a list of `[quantity, product_id, specials]` tuples.
+
+### $root/purchases/$purchase_id
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Purchase properties</td>
+    <td>Update purchase properties</td>
+    <td>Confirm purchase</td>
+    <td>Cancel purchase</td>
+  </tr>
+</table>
+
+Purchase properties cannot be changed after confirmation, but the purchase may be canceled, with server-side logic to determine if the cancellation is successful. Cancelling a purchase reverts ownership of the products, and refunds the customer.
+
+### $root/tags
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>List of all available tags</td>
+    <td><i>No action</i></td>
+    <td>New tag</td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+Listing includes shallow metadata for each tag (description, image URL, etc.)
+
+### $root/tags/$tag_name
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Tag properties</td>
+    <td>Update tag properties</td>
+    <td><i>No action</i></td>
+    <td>Delete tag</td>
+  </tr>
+</table>
+
+--------
+Permissions model TBD.
