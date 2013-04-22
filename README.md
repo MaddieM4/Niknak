@@ -301,5 +301,103 @@ Listing includes shallow metadata for each tag (description, image URL, etc.)
   </tr>
 </table>
 
---------
-Permissions model TBD.
+### $root/permission
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td><i>No action</i></td>
+    <td><i>No action</i></td>
+    <td>Create new permission</td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+### $root/permission/$permission_id
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Return permission data</td>
+    <td>Update permission data</td>
+    <td><i>No action</i></td>
+    <td>Revoke permission</td>
+  </tr>
+</table>
+
+Permissions have a few properties.
+
+ * User ID
+ * Type (read, write, or both)
+ * Method
+ * Object ID
+ * Scope
+
+Method is an HTTP method (i.e. "PUT") and Object ID is an API URL (i.e. "$root/users"). Scope may be null, or a space-separated list of property names (for restricting what properties can be seen or updated).
+
+The term user ID is a bit disingenuous. All UIDs under 1000 (a configurable number) represent user groups. The two default groups are admin (0) and everyone (1). The admin group can be edited, the everyone group cannot. Thus, permissions with a UID &lt; 1000 are group permissions.
+
+### $root/groups
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>List existing groups</td>
+    <td><i>No action</i></td>
+    <td>Create new group</td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
+A group list is a {"$id":"$groupname"} mapping.
+
+### $root/groups/$group_id
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Return group metadata</td>
+    <td>Update group metadata</td>
+    <td>Add user to group</td>
+    <td>Delete group</td>
+  </tr>
+</table>
+
+### $root/groups/$group_id/$user_id
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>Return 'true' or 'false'</td>
+    <td><i>No action</i></td>
+    <td><i>No action</i></td>
+    <td>Delete user from group</td>
+  </tr>
+</table>
+
+Can be GET-ed to determine if user is a member of a group. If 'false', response code must also be 404.
