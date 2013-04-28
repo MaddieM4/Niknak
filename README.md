@@ -119,6 +119,23 @@ User properties TBD.
 
 User properties TBD.
 
+### $root/users/$uid/owned
+
+<table>
+  <tr>
+    <td><b>GET</b></td>
+    <td><b>POST</b></td>
+    <td><b>PUT</b></td>
+    <td><b>DELETE</b></td>
+  </tr>
+  <tr>
+    <td>List of products purchased by user</td>
+    <td><i>No action</i></td>
+    <td><i>No action</i></td>
+    <td><i>No action</i></td>
+  </tr>
+</table>
+
 ### $root/products
 
 <table>
@@ -343,7 +360,9 @@ Permissions have a few properties.
  * Object ID
  * Scope
 
-Method is an HTTP method (i.e. "PUT") and Object ID is an API URL (i.e. "$root/users"). Scope may be null, or a space-separated list of property names (for restricting what properties can be seen or updated).
+Method is an HTTP method (i.e. "PUT") and Object ID is an API URL (i.e. "$root/users" or "$root/groups/\*"). The asterisk is a wildcard for a range of non-/ characters.
+
+Scope may be null, or a comma-separated list of property names (for restricting what properties can be seen or updated). Properties may have a " = somevalue" or " IN (value1,value2)" for further row filtering. For example, to give a daemon the ability to determine if a user has access to a service (for example, an MMO or a VPN), give the daemon a permission with Object ID "$root/users/\*/owned", method "GET", type "read", and scope "product_id=72", where 72 is the ID of the service. If the daemon needs to see this data for multiple services, you could express this with multiple permissions, or a scope like "product_id IN (72, 40, 99)".
 
 The term user ID is a bit disingenuous. All UIDs under 1000 (a configurable number) represent user groups. The two default groups are admin (0) and everyone (1). The admin group can be edited, the everyone group cannot. Thus, permissions with a UID &lt; 1000 are group permissions.
 
